@@ -13,6 +13,7 @@ WHERE id = $1 LIMIT 1;
 
 -- name: UpdateUser :one
 UPDATE users
-  set encrypted_password = $2
+SET encrypted_password = $2,
+    updated_at = NOW()
 WHERE id = $1
 RETURNING *;
