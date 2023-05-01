@@ -6,3 +6,9 @@ createdb:
 
 dropdb:
 	docker exec -it go-todo-list dropdb todo
+
+migrateup:
+	migrate -path db/migrations -database "postgresql://root:secret@localhost:5433/todo?sslmode=disable" -verbose up
+
+migratedown:
+	migrate -path db/migrations -database "postgresql://root:secret@localhost:5433/todo?sslmode=disable" -verbose down
