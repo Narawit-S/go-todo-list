@@ -15,6 +15,7 @@ func NewServer(store *db.Store) *Server {
 	router := gin.Default()
 
 	///api
+	router.POST("/register", server.createUser)
 
 	server.router = router
 	return server
@@ -22,4 +23,8 @@ func NewServer(store *db.Store) *Server {
 
 func (server *Server) Start(port string) error {
 	return server.router.Run(port)
+}
+
+func ErrorResponse(err error) gin.H {
+	return gin.H{"error": err.Error()}
 }
