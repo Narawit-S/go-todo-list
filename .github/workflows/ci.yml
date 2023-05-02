@@ -30,6 +30,14 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v3
 
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_DB_DRIVER: ${{ secrets.DB_DRIVER }}
+          envkey_DB_SOURCE: ${{ secrets.DB_SOURCE }}
+          envkey_PORT: ${{ secrets.PORT }}
+          file_name: .env
+
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
