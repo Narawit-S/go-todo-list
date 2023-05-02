@@ -37,7 +37,7 @@ func TestCreateUser(t *testing.T) {
 func TestGetUser(t *testing.T)() {
 	user := createTestUser(t)
 
-	query_user, err := testQuries.GetUser(context.Background(), user.ID)
+	query_user, err := testQuries.GetUser(context.Background(), user.Email)
 
 	require.NoError(t, err)
 	require.NotEmpty(t, query_user)
