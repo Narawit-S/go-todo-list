@@ -6,17 +6,17 @@ import (
 
 	"github.com/Narawit-S/go-todo-list/api"
 	db "github.com/Narawit-S/go-todo-list/db/sqlc"
+	"github.com/Narawit-S/go-todo-list/utils"
 	_ "github.com/lib/pq"
 )
 
-const (
-	dbDiver = "postgres"
-	dbSource = "postgresql://root:secret@localhost:5433/todo?sslmode=disable"
-	port = ":8080"
-)
-
 func main() {
-	dbConn, err := sql.Open(dbDiver, dbSource)
+	env, err := utils.LoadEnv(".")
+	if err != nil {
+		log.Fatal("Cannot load env", err)
+	}
+
+	dbConn, err := sql.Open(env.DBDriver, env.DBSource)
 
 	if err != nil {
 		log.Fatal("Cannot connect to db", err)
@@ -25,7 +25,7 @@ func main() {
 	store := db.NewStore(dbConn)
 	server := api.NewServer(store)
 
-	err = server.Start(port)
+	err = server.Start(env.Port)
 	if err != nil {
 		log.Fatal("Cannot start server", err)
 	}
